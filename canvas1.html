@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="utf-8">
+	<title>Спираль!...</title>
+</head>
+<body style="margin: 0;">
+	<canvas id="canvas" style="display: block;">Что-то пошло не так.</canvas>
+	<script>
+		var canvas = document.getElementById("canvas"),
+			context = canvas.getContext("2d");
+
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+
+		////////////////////////////////////////////////
+		//x
+		context.beginPath();
+		context.moveTo(0, canvas.height / 2);
+		context.lineTo(canvas.width, canvas.height / 2);
+		context.stroke();
+		context.closePath();
+		//y
+		context.beginPath();
+		context.moveTo(canvas.width / 2, 0);
+		context.lineTo(canvas.width / 2, canvas.height);
+		context.stroke();
+		context.closePath();
+		////////////////////////////////////////////////
+/*		//radiuses
+		var rad = 50;
+		context.lineWidth = 1;
+		for(var i = 0; i < 20; i++){
+			context.beginPath();
+			context.arc(canvas.width / 2, canvas.height / 2, i * rad, 0, Math.PI*2);
+			context.stroke();
+		}*/
+		////////////////////////////////////////////////
+		//figure r=af -> r = sqrt(x*x+y*y) x = r*cos(fi), y = r*sin(fi), r = x; 
+		context.strokeStyle = "red";
+		context.lineWidth = 3;
+		var lastX = canvas.width / 2,
+			lastY = canvas.height / 2;
+
+		context.beginPath();
+		context.moveTo(lastX, lastY);
+		var x, y;
+		/*
+		for (var fi = 0, r = 0; fi < 20 * Math.PI; fi += 0.1, r += 1){
+			x = r * Math.cos(fi);
+			y = r * Math.sin(fi);
+			context.lineTo(lastX + x, lastY - y);
+			context.stroke();
+		}
+		context.closePath();*/
+		////////////////////////////////////////////////
+		r = 0;
+		fi = 0;
+		setInterval(function(){
+			x = r * Math.cos(fi);
+			y = r * Math.sin(fi);
+			context.lineTo(lastX + x, lastY - y);
+			fi +=0.1;
+			r += 1;
+			context.stroke();
+		}, 20);
+		/*
+		context.strokeStyle = "red";
+		context.lineWidth = 5;
+		var lastX = canvas.width / 2,
+			lastY = canvas.height / 2,
+			newX, newY;
+		for (var i = 0; i < 20; i++){
+			newX = rad / Math.sqrt(2);
+			newX += lastX;
+			newY = -(rad / Math.sqrt(2));
+			newY += lastY;
+			context.beginPath();
+			context.moveTo(canvas.width / 2, canvas.height / 2);
+			//
+			context.arcTo(newX, lastY, newX, newY, 35);
+			context.stroke();
+		}*/
+		////////////////////////////////////////////////
+	</script>
+</body>
+</html>
